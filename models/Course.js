@@ -39,7 +39,6 @@ const CourseSchema = new mongoose.Schema({
 
 // statice method to find average cost of tuition
 CourseSchema.statics.getAverage = async function (bootcampId) {
-	console.log("calculating average cos..".blue);
 
 	const obj = await this.aggregate([
 		{
@@ -52,13 +51,12 @@ CourseSchema.statics.getAverage = async function (bootcampId) {
 			},
 		},
 	]);
-	console.log(obj);
 	try {
 		await this.model("Bootcamp").findByIdAndUpdate(bootcampId, {
-			averageCost: Math.ceil(obj[0].averageCost / 10 ) * 10
+			averageCost: Math.ceil(obj[0].averageCost / 10) * 10,
 		});
 	} catch (err) {
-		console.error(err)
+		console.error(err);
 	}
 };
 
